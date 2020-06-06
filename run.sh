@@ -144,6 +144,9 @@ prepare_docker_userdata_volumes() {
   # wine config
   [ -d $HOME/.wine ] || mkdir -p $HOME/.wine
   MOUNTS+=" --mount type=bind,source=$HOME/.wine,target=/home/$USER_NAME/.wine"
+  # winetricks cache
+  [ -d $HOME/.cache/winetricks ] || mkdir -p $HOME/.cache/winetricks
+  MOUNTS+=" --mount type=bind,source=$HOME/.cache/winetricks,target=/home/$USER_NAME/.cache/winetricks"
 }
 
 prepare_docker_timezone

@@ -13,14 +13,11 @@ ENV WINEDEBUG -all
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Configure apt and install packages
-RUN apt-get update && apt-get -y upgrade \
+# Enable 32 bit architecture, configure apt and install packages
+RUN dpkg --add-architecture i386 && apt-get update && apt-get -y upgrade \
     # 
     # Install software and needed libraries
-    && apt-get -y install --no-install-recommends software-properties-common 2>&1 \
-    #
-    # Enable 32 bit architecture
-    && dpkg --add-architecture i386 \
+    && apt-get -y install --no-install-recommends software-properties-common winbind libncurses5:i386 2>&1 \
     #
     # Add Repos
     #
@@ -33,7 +30,7 @@ RUN apt-get update && apt-get -y upgrade \
     && add-apt-repository 'deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./' \
     #
     # Install software
-    && apt-get update && apt-get -y upgrade && apt-get -y install --install-recommends winehq-stable winetricks \
+    && apt-get update && apt-get -y upgrade && apt-get -y install --install-recommends winehq-stable winetricks 2>&1 \
     #
     # Clean up
     && apt-get autoremove -y \

@@ -1,4 +1,4 @@
-FROM rubensa/ubuntu-tini-x11
+FROM rubensa/ubuntu-tini-x11:18.04
 LABEL author="Ruben Suarez <rubensa@gmail.com>"
 
 # Tell docker that all future commands should be run as root
@@ -91,13 +91,17 @@ RUN apt-get update \
     #
     # Wine repo
     && curl -sSL https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
-    && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' \
+    && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' \
+    #
+    # Faudio backport repo
+    && curl -sSL https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_10/Release.key | apt-key add - \
+    && add-apt-repository 'deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./' \
     #
     # Enable 32 bit architecture
     && dpkg --add-architecture i386 \
     #
     # Install software
-    && apt-get update && apt-get -y upgrade 2>&1 && apt-get -y install --install-recommends libncurses6:i386 winehq-stable zenity winetricks 2>&1 \
+    && apt-get update && apt-get -y upgrade 2>&1 && apt-get -y install --install-recommends libncurses5:i386 winehq-stable zenity winetricks 2>&1 \
     #
     # Clean up
     && apt-get autoremove -y \

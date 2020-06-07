@@ -1,6 +1,6 @@
 # Docker image with Wine
 
-This is a Docker image based on [rubensa/ubuntu-tini-x11](https://github.com/rubensa/docker-ubuntu-tini-x11) that includes [Wine](https://www.winehq.org/).
+This is a Docker image based on [rubensa/ubuntu-tini-x11](https://github.com/rubensa/docker-ubuntu-tini-x11) 18.04 that includes [Wine](https://www.winehq.org/).
 
 ## Building
 
@@ -10,7 +10,7 @@ You can build the image like this:
 #!/usr/bin/env bash
 
 docker build --no-cache \
-  -t "rubensa/ubuntu-tini-wine" \
+  -t "rubensa/ubuntu-tini-wine:18.04" \
   --label "maintainer=Ruben Suarez <rubensa@gmail.com>" \
   .
 ```
@@ -198,7 +198,7 @@ bash -c "docker run --rm -it \
   ${EXTRA} \
   ${RUNNER} \
   ${RUNNER_GROUPS} \
-  rubensa/ubuntu-tini-wine"
+  rubensa/ubuntu-tini-wine:18.04"
 ```
 
 *NOTE*: Mounting /etc/timezone and /etc/localtime allows you to use your host timezone on container.

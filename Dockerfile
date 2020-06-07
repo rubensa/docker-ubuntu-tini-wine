@@ -1,4 +1,4 @@
-FROM rubensa/ubuntu-tini-x11
+FROM rubensa/ubuntu-tini-x11:18.04
 LABEL author="Ruben Suarez <rubensa@gmail.com>"
 
 # Tell docker that all future commands should be run as root
@@ -26,19 +26,16 @@ RUN echo "# Enabling 32 bit architecture (needed by wine apps)..." \
   #
   # Enable 32 bit architecture
   && dpkg --add-architecture i386 \
-  && apt-get update && apt-get -y install --no-install-recommends libncurses6:i386 libpulse0:i386 libdbus-1-3:i386 libsdl2-2.0-0:i386 software-properties-common winbind zenity 2>&1 
+  && apt-get update && apt-get -y install --no-install-recommends libncurses5:i386 libpulse0:i386 libdbus-1-3:i386 libsdl2-2.0-0:i386 software-properties-common winbind zenity 2>&1 
 
 # Suppress the Wine debug messages
 ENV WINEDEBUG -all
 # Add winehq repo
 RUN mkdir -p /etc/apt/keyrings/ \
   && curl -sSL https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq.gpg  \
-  && printf "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ jammy main" > /etc/apt/sources.list.d/wine.list  \
+  && printf "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ bionic main" > /etc/apt/sources.list.d/wine.list  \
   # Install wine and winetricks
   && echo "# Installing wine and winetricks..." \
-  # No stable version yet for Ubuntu 22.04 (Jammy Jellyfish)
-  # see: https://forum.winehq.org/viewtopic.php?t=36501
-  # and: https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/
   # Looks like devel version is always preferred over stable
   # see: https://wiki.winehq.org/FAQ#Which_version_of_Wine_should_I_use.3F
   && apt-get update && apt-get -y install --install-recommends wine-devel winehq-devel winetricks 2>&1

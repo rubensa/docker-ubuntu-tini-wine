@@ -22,7 +22,7 @@ RUN apt-get update \
     # Add Repos
     #
     # Wine repo
-    && curl https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
+    && curl -sSL https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
     && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' \
     #
     # Enable 32 bit architecture

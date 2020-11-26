@@ -32,13 +32,13 @@ RUN apt-get update \
     # Corbel (Bold, Italic, Bold Italic), Constantia (Bold, Italic, Bold Italic), Cambria (Bold, Italic, Bold Italic)
     # Cambria Math
     && mkdir -p /tmp/fonts \
-    && curl -o /tmp/fonts/PowerPointViewer.exe -sSL https://web.archive.org/web/20171225132744/http://download.microsoft.com/download/E/6/7/E675FFFC-2A6D-4AB0-B3EB-27C9F8C8F696/PowerPointViewer.exe \
+    && curl -o /tmp/fonts/PowerPointViewer.exe -sSL https://sourceforge.net/projects/mscorefonts2/files/cabs/PowerPointViewer.exe/download \
     && cabextract -F ppviewer.cab /tmp/fonts/PowerPointViewer.exe -d /tmp/fonts \
     && cabextract -L -F '*.tt?' /tmp/fonts/ppviewer.cab -d /tmp/fonts \
     && fontforge -lang=ff -c 'Open("/tmp/fonts/cambria.ttc(Cambria)"); Generate("/tmp/fonts/cambria.ttf"); Close(); Open("/tmp/fonts/cambria.ttc(Cambria Math)"); Generate("/tmp/fonts/cambriamath.ttf"); Close();' \
     # Microsoft Tahoma
     && mkdir -p /tmp/fonts \
-    && curl -o /tmp/fonts/IELPKTH.CAB -sSL https://master.dl.sourceforge.net/project/corefonts/OldFiles/IELPKTH.CAB \
+    && curl -o /tmp/fonts/IELPKTH.CAB -sSL https://sourceforge.net/project/corefonts/OldFiles/IELPKTH.CAB/download \
     && cabextract -F 'tahoma*ttf' /tmp/fonts/IELPKTH.CAB -d /tmp/fonts \
     # Wine Tahoma
     && mkdir -p /tmp/fonts \

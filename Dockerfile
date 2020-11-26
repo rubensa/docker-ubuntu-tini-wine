@@ -38,7 +38,7 @@ RUN apt-get update \
     && fontforge -lang=ff -c 'Open("/tmp/fonts/cambria.ttc(Cambria)"); Generate("/tmp/fonts/cambria.ttf"); Close(); Open("/tmp/fonts/cambria.ttc(Cambria Math)"); Generate("/tmp/fonts/cambriamath.ttf"); Close();' \
     # Microsoft Tahoma
     && mkdir -p /tmp/fonts \
-    && curl -o /tmp/fonts/IELPKTH.CAB -sSL https://sourceforge.net/project/corefonts/OldFiles/IELPKTH.CAB/download \
+    && curl -o /tmp/fonts/IELPKTH.CAB -sSL https://sourceforge.net/projects/corefonts/files/OldFiles/IELPKTH.CAB/download \
     && cabextract -F 'tahoma*ttf' /tmp/fonts/IELPKTH.CAB -d /tmp/fonts \
     # Wine Tahoma
     && mkdir -p /tmp/fonts \

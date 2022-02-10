@@ -7,14 +7,14 @@ USER root
 # Set root home directory
 ENV HOME=/root
 
-# Suppress the Wine debug messages
-ENV WINEDEBUG -all
-
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Configure apt
+RUN apt-get update
+
 # Configure apt and install packages
-RUN apt-get update \
+RUN echo "# Installing Microsoft fonts..." \
     #
     # Install Micro$oft Fonts
     #
@@ -82,10 +82,19 @@ RUN apt-get update \
     && rm -rf /tmp/fonts \
     #
     # Sans-serif font metric-compatible with Calibri font
-    && apt-get -y install --no-install-recommends fonts-crosextra-carlito 2>&1 \
-    # 
-    # Install software and needed libraries
-    && apt-get -y install --no-install-recommends software-properties-common winbind 2>&1 \
+    && apt-get -y install --no-install-recommends fonts-crosextra-carlito 2>&1
+
+# Install wine dependencies
+RUN echo "# Enabling 32 bit architecture (needed by wine apps)..." \
+    #
+    # Enable 32 bit architecture
+    && dpkg --add-architecture i386 \
+    && apt-get update && apt-get -y install --no-install-recommends libncurses6:i386 software-properties-common winbind zenity 2>&1 
+
+# Suppress the Wine debug messages
+ENV WINEDEBUG -all
+# Install wine and winetricks
+RUN echo "# Installing wine and winetricks..." \
     #
     # Add Repos
     #
@@ -93,14 +102,11 @@ RUN apt-get update \
     && curl -sSL https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
     && add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' \
     #
-    # Enable 32 bit architecture
-    && dpkg --add-architecture i386 \
-    #
     # Install software
-    && apt-get update && apt-get -y upgrade 2>&1 && apt-get -y install --install-recommends libncurses6:i386 winehq-stable zenity winetricks 2>&1 \
-    #
-    # Clean up
-    && apt-get autoremove -y \
+    && apt-get update && apt-get -y install --install-recommends winehq-stable winetricks 2>&1
+
+# Clean up apt
+RUN apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 

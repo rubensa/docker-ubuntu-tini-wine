@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM rubensa/ubuntu-tini-x11
+FROM rubensa/ubuntu-tini-x11:22.04
 LABEL author="Ruben Suarez <rubensa@gmail.com>"
 
 # Tell docker that all future commands should be run as root
@@ -40,7 +40,7 @@ ENV WINEDEBUG -all
 RUN <<EOT
 mkdir -p /etc/apt/keyrings/
 curl -sSL https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq.gpg
-printf "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ noble main" > /etc/apt/sources.list.d/wine.list
+printf "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ jammy main" > /etc/apt/sources.list.d/wine.list
 # Install wine and winetricks
 echo "# Installing wine and winetricks..."
 # Looks like devel version is always preferred over stable

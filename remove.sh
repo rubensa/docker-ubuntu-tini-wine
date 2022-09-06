@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+
 docker rm \
-  ubuntu-tini-wine
+  "${DOCKER_IMAGE_NAME}"

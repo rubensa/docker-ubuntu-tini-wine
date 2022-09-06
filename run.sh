@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+DOCKER_REPOSITORY_NAME="rubensa"
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+DOCKER_IMAGE_TAG="latest"
+
 # Get current user UID
 USER_ID=$(id -u)
 # Get current user main GUID
@@ -167,7 +171,7 @@ prepare_docker_in_docker
 prepare_docker_userdata_volumes
 
 bash -c "docker run --rm -it \
-  --name ubuntu-tini-wine \
+  --name ${DOCKER_IMAGE_NAME} \
   ${SECURITY} \
   ${CAPABILITIES} \
   ${ENV_VARS} \
@@ -176,4 +180,4 @@ bash -c "docker run --rm -it \
   ${EXTRA} \
   ${RUNNER} \
   ${RUNNER_GROUPS} \
-  rubensa/ubuntu-tini-wine"
+  ${DOCKER_REPOSITORY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"

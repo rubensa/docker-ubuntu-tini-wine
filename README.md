@@ -9,8 +9,12 @@ You can build the image like this:
 ```
 #!/usr/bin/env bash
 
+DOCKER_REPOSITORY_NAME="rubensa"
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+DOCKER_IMAGE_TAG="latest"
+
 docker build --no-cache \
-  -t "rubensa/ubuntu-tini-wine" \
+  -t "${DOCKER_REPOSITORY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" \
   --label "maintainer=Ruben Suarez <rubensa@gmail.com>" \
   .
 ```
@@ -21,6 +25,10 @@ You can run the container like this (change --rm with -d if you don't want the c
 
 ```
 #!/usr/bin/env bash
+
+DOCKER_REPOSITORY_NAME="rubensa"
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+DOCKER_IMAGE_TAG="latest"
 
 # Get current user UID
 USER_ID=$(id -u)
@@ -189,7 +197,7 @@ prepare_docker_in_docker
 prepare_docker_userdata_volumes
 
 bash -c "docker run --rm -it \
-  --name ubuntu-tini-wine \
+  --name ${DOCKER_IMAGE_NAME} \
   ${SECURITY} \
   ${CAPABILITIES} \
   ${ENV_VARS} \
@@ -198,7 +206,7 @@ bash -c "docker run --rm -it \
   ${EXTRA} \
   ${RUNNER} \
   ${RUNNER_GROUPS} \
-  rubensa/ubuntu-tini-wine"
+  ${DOCKER_REPOSITORY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 ```
 
 *NOTE*: Mounting /etc/timezone and /etc/localtime allows you to use your host timezone on container.
@@ -220,8 +228,10 @@ You can connect to the running container like this:
 ```
 #!/usr/bin/env bash
 
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+
 docker exec -it \
-  ubuntu-tini-wine \
+  "${DOCKER_IMAGE_NAME}" \
   bash -l
 ```
 
@@ -243,8 +253,10 @@ You can stop the running container like this:
 ```
 #!/usr/bin/env bash
 
-docker stop \
-  ubuntu-tini-wine
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+
+docker stop  \
+  "${DOCKER_IMAGE_NAME}"
 ```
 
 ## Start
@@ -254,8 +266,10 @@ If you run the container without --rm you can start it again like this:
 ```
 #!/usr/bin/env bash
 
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+
 docker start \
-  ubuntu-tini-wine
+  "${DOCKER_IMAGE_NAME}"
 ```
 
 ## Remove
@@ -265,6 +279,8 @@ If you run the container without --rm you can remove once stopped like this:
 ```
 #!/usr/bin/env bash
 
+DOCKER_IMAGE_NAME="ubuntu-tini-wine"
+
 docker rm \
-  ubuntu-tini-wine
+  "${DOCKER_IMAGE_NAME}"
 ```

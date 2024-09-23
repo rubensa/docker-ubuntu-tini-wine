@@ -33,14 +33,11 @@ ENV WINEDEBUG -all
 # Add winehq repo
 RUN mkdir -p /etc/apt/keyrings/ \
   && curl -sSL https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq.gpg  \
-  && printf "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ jammy main" > /etc/apt/sources.list.d/wine.list  \
+  && printf "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ noble main" > /etc/apt/sources.list.d/wine.list  \
   # Install wine and winetricks
   && echo "# Installing wine and winetricks..." \
-  # No stable version yet for Ubuntu 22.04 (Jammy Jellyfish)
-  # see: https://forum.winehq.org/viewtopic.php?t=36501
-  # and: https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/
   # Looks like devel version is always preferred over stable
-  # see: https://wiki.winehq.org/FAQ#Which_version_of_Wine_should_I_use.3F
+  # see: https://gitlab.winehq.org/wine/wine/-/wikis/FAQ#which-version-of-wine-should-i-use
   && apt-get update && apt-get -y install --install-recommends wine-devel winehq-devel winetricks 2>&1
 
 # Clean up apt
